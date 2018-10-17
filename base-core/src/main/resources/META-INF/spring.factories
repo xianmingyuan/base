@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.example.base.core.swagger2.Swagger2AutoConfiguration

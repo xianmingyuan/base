@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: base-core
+eureka:
+  client:
+    region: dongguan
+    availability-zones:
+      dongguan: master,slave
+    service-url:
+      master: http://111.231.249.159:8761/eureka/
+      slave: http://134.175.47.117:8761/eureka/
+  instance:
+    ip-address: ${IP_ADDRESS}
+    prefer-ip-address: true
+    metadata-map:
+      zone: ${ZONE}
