@@ -6,6 +6,7 @@ import com.example.base.util.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,19 @@ import java.util.List;
 @Slf4j
 @RestController
 public class TestController {
+
+    private RestTemplate restTemplate;
+
+    public TestController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @GetMapping("test")
+    public Response testAuthentication(){
+        Response response = restTemplate.getForObject("http://authentication/test", Response.class);
+        System.out.println("response = " + response);
+        return response;
+    }
 
     @GetMapping("test/test1")
     public Response<String> test(){
