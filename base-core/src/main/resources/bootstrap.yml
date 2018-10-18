@@ -5,12 +5,12 @@ eureka:
   client:
     region: dongguan
     availability-zones:
-      dongguan: master,slave
+      dongguan: master,slave  # 可用地区以及机房
     service-url:
       master: http://111.231.249.159:8761/eureka/
       slave: http://134.175.47.117:8761/eureka/
-  instance:
+  instance: # 注意注册中心不要有instance信息，否则DS Replicas会有问题
     ip-address: ${IP_ADDRESS}
     prefer-ip-address: true
     metadata-map:
-      zone: ${ZONE}
+      zone: ${ZONE} #所属机房
