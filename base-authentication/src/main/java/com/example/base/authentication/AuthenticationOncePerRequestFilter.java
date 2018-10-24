@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author xianmingyuan
+ */
 public class AuthenticationOncePerRequestFilter extends OncePerRequestFilter {
 
     private AuthenticationProperties properties;

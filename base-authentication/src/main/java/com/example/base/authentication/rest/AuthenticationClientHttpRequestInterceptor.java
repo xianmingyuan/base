@@ -10,6 +10,9 @@ import org.springframework.http.client.support.HttpRequestWrapper;
 
 import java.io.IOException;
 
+/**
+ * @author xianmingyuan
+ */
 @Slf4j
 public class AuthenticationClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 

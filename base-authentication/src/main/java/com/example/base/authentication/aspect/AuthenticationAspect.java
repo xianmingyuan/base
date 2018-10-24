@@ -11,6 +11,9 @@ import org.aspectj.lang.annotation.Aspect;
 
 import java.util.Objects;
 
+/**
+ * @author xianmingyuan
+ */
 @Slf4j
 @Aspect
 public class AuthenticationAspect {

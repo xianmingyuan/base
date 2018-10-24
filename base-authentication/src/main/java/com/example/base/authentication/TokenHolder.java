@@ -1,5 +1,8 @@
 package com.example.base.authentication;
 
+/**
+ * @author xianmingyuan
+ */
 public class TokenHolder {
 
     private static ThreadLocal<String> threadLocal = new ThreadLocal<>();

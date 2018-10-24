@@ -4,6 +4,9 @@ import com.example.base.authentication.AuthenticationProperties;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
+/**
+ * @author xianmingyuan
+ */
 public class AuthenticationRequestInterceptor implements RequestInterceptor {
 
     private AuthenticationProperties properties;
