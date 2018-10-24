@@ -1,5 +1,12 @@
 package com.example.base.util;
 
+import com.example.base.util.exception.IdWorkerException;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @author xianmingyuan
+ */
+@Slf4j
 public class IdWorker{
 
     private long workerId;
@@ -7,16 +14,13 @@ public class IdWorker{
     private long sequence;
 
     public IdWorker(long workerId, long dataCenterId, long sequence){
-        // sanity check for workerId
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0",maxWorkerId));
         }
         if (dataCenterId > maxDatacenterId || dataCenterId < 0) {
             throw new IllegalArgumentException(String.format("dataCenter Id can't be greater than %d or less than 0",maxDatacenterId));
         }
-        System.out.printf("worker starting. timestamp left shift %d, dataCenter id bits %d, worker id bits %d, sequence bits %d, workerid %d",
-                timestampLeftShift, datacenterIdBits, workerIdBits, sequenceBits, workerId);
-
+        log.info("worker starting. timestamp left shift {}, dataCenter id bits {}, worker id bits {}, sequence bits {}, workerid {}", timestampLeftShift, datacenterIdBits, workerIdBits, sequenceBits, workerId);
         this.workerId = workerId;
         this.dataCenterId = dataCenterId;
         this.sequence = sequence;
@@ -26,14 +30,14 @@ public class IdWorker{
 
     private long workerIdBits = 5L;
     private long datacenterIdBits = 5L;
-    private long maxWorkerId = -1L ^ (-1L << workerIdBits);
-    private long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
+    private long maxWorkerId = ~(-1L << workerIdBits);
+    private long maxDatacenterId = ~(-1L << datacenterIdBits);
     private long sequenceBits = 12L;
 
     private long workerIdShift = sequenceBits;
     private long datacenterIdShift = sequenceBits + workerIdBits;
     private long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
-    private long sequenceMask = -1L ^ (-1L << sequenceBits);
+    private long sequenceMask = ~(-1L << sequenceBits);
 
     private long lastTimestamp = -1L;
 
@@ -53,8 +57,8 @@ public class IdWorker{
         long timestamp = timeGen();
 
         if (timestamp < lastTimestamp) {
-            System.err.printf("clock is moving backwards.  Rejecting requests until %d.", lastTimestamp);
-            throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds",
+            log.error("clock is moving backwards.  Rejecting requests until {}.", lastTimestamp);
+            throw new IdWorkerException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds",
                     lastTimestamp - timestamp));
         }
 
