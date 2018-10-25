@@ -14,7 +14,7 @@
         <module>base-util</module>
         <module>base-authentication</module>
         <module>base-dynamic-datasource</module>
-        <module>base-zookeeper-master</module>
+        <module>base-master-election</module>
         <module>base-dynamic-datasource-test</module>
     </modules>
 

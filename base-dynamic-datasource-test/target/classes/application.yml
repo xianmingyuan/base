@@ -1,0 +1,13 @@
+base:
+  dynamic:
+    datasource:
+      write:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://111.231.249.159:3306/master?characterEncoding=utf8&useSSL=false
+        username: root
+        password: root
+      read:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://111.231.249.159:3306/slave?characterEncoding=utf8&useSSL=false
+        username: root
+        password: root
