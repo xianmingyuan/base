@@ -10,7 +10,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>base-core</module>
-        <module>base-test</module>
         <module>base-util</module>
         <module>base-authentication</module>
         <module>base-dynamic-datasource</module>
