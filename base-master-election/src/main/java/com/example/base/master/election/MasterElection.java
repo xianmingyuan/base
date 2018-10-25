@@ -1,4 +1,4 @@
-package com.example.base.zookeeper.master;
+package com.example.base.master.election;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -13,14 +13,14 @@ import java.io.IOException;
  */
 @Slf4j
 @Data
-public class ZookeeperMasterElection {
+public class MasterElection {
 
     private ZooKeeper zooKeeper;
     private String path;
     private String value;
     private boolean isMaster;
 
-    public ZookeeperMasterElection(String address, int timeout, String path, String value) {
+    public MasterElection(String address, int timeout, String path, String value) {
         try {
             zooKeeper = new ZooKeeper(address, timeout, event -> { });
             this.path = path;

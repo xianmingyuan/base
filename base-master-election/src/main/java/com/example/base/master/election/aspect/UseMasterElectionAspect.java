@@ -1,8 +1,9 @@
-package com.example.base.zookeeper.master.aspect;
+package com.example.base.master.election.aspect;
 
-import com.example.base.zookeeper.master.ZookeeperMasterElection;
-import com.example.base.zookeeper.master.ZookeeperMasterElectionProperties;
-import com.example.base.zookeeper.master.annotation.UseZookeeperMasterElection;
+import com.example.base.master.election.MasterElection;
+import com.example.base.master.election.MasterElectionProperties;
+import com.example.base.master.election.annotation.UseMasterElection;
+import com.example.base.master.election.exception.NoMasterException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,34 +15,36 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author xianmingyuan
+ */
 @Slf4j
 @Aspect
 @Component
-public class UseZookeeperMasterElectionAspect implements ApplicationContextAware {
+public class UseMasterElectionAspect implements ApplicationContextAware {
 
     private ConfigurableApplicationContext context;
 
-    private ZookeeperMasterElectionProperties properties;
+    private MasterElectionProperties properties;
 
-    public UseZookeeperMasterElectionAspect(ZookeeperMasterElectionProperties properties) {
+    public UseMasterElectionAspect(MasterElectionProperties properties) {
         this.properties = properties;
     }
 
     @Around("@annotation(selection)")
-    public Object proceed(ProceedingJoinPoint jp, UseZookeeperMasterElection selection) {
-        ZookeeperMasterElection election;
+    public Object proceed(ProceedingJoinPoint jp, UseMasterElection selection) {
+        String path = selection.path();
+        String value = selection.value();
+        MasterElection election;
         try {
-            election = (ZookeeperMasterElection) context.getBean(selection.name());
+            election = (MasterElection) context.getBean(path);
         } catch (NoSuchBeanDefinitionException e) {
             //实例化一个ZookeeperMasterElection
             log.info("正在实例化ZookeeperMasterElection");
-            String path = selection.name();
-            String value = selection.name();
             context.getBeanFactory()
-                    .registerSingleton(selection.name(), new ZookeeperMasterElection(properties.getAddress(), properties.getTimeout(), path, value));
-            election = (ZookeeperMasterElection) context.getBean(selection.name());
+                    .registerSingleton(path, new MasterElection(properties.getAddress(), properties.getTimeout(), path, value));
+            election = (MasterElection) context.getBean(path);
         }
-        log.info("election = {}", election);
         if (election.isMaster()) {
             try {
                 return jp.proceed();
@@ -49,7 +52,7 @@ public class UseZookeeperMasterElectionAspect implements ApplicationContextAware
                 log.error("进行master判断后，执行方法异常", throwable);
             }
         }
-        return null;
+        throw new NoMasterException();
     }
 
     @Override
