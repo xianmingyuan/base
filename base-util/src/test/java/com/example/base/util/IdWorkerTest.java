@@ -15,7 +15,7 @@ public class IdWorkerTest {
     public void nextId() {
         long l = System.currentTimeMillis();
         System.out.println("l = " + l);
-        IdWorker idWorker = new IdWorker(System.currentTimeMillis(), 1, 1);
+        IdWorker idWorker = new IdWorker(1, 1);
         int size = 10000000;
         Set<Long> set = new HashSet<>(size);
         for (int i = 0; i < size; i++) {
