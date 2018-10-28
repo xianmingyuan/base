@@ -12,7 +12,7 @@ public class IdWorker {
     /**
      * 开始时间截
      */
-    private final long startTime;
+    private static final long START_TIME = 1540738351526L;
 
     /**
      * 机器id所占的位数
@@ -87,13 +87,12 @@ public class IdWorker {
      * @param workerId     工作ID (0~31)
      * @param dataCenterId 数据中心ID (0~31)
      */
-    public IdWorker(long startTime, long workerId, long dataCenterId) {
-        this.startTime = startTime;
+    public IdWorker(long workerId, long dataCenterId) {
         if (workerId > MAX_WORKER_ID || workerId < 0) {
             throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", MAX_WORKER_ID));
         }
         if (dataCenterId > MAX_DATA_CENTER_ID || dataCenterId < 0) {
-            throw new IllegalArgumentException(String.format("datacenter Id can't be greater than %d or less than 0", MAX_DATA_CENTER_ID));
+            throw new IllegalArgumentException(String.format("dataCenter Id can't be greater than %d or less than 0", MAX_DATA_CENTER_ID));
         }
         this.workerId = workerId;
         this.dataCenterId = dataCenterId;
@@ -133,7 +132,7 @@ public class IdWorker {
         lastTimestamp = timestamp;
 
         //移位并通过或运算拼到一起组成64位的ID
-        return ((timestamp - startTime) << TIMESTAMP_LEFT_SHIFT)
+        return ((timestamp - START_TIME) << TIMESTAMP_LEFT_SHIFT)
                 | (dataCenterId << DATA_CENTER_ID_SHIFT)
                 | (workerId << WORKER_ID_SHIFT)
                 | sequence;
