@@ -15,6 +15,8 @@
         <module>base-dynamic-datasource</module>
         <module>base-master-election</module>
         <module>base-log</module>
+        <module>base-distribution-lock</module>
+        <module>base-test</module>
     </modules>
 
     <parent>
