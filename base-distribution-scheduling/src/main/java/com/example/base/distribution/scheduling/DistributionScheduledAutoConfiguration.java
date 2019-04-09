@@ -5,12 +5,12 @@ import org.springframework.context.annotation.Bean;
 public class DistributionScheduledAutoConfiguration {
 
     @Bean
-    public DistributionScheduledAspect distributionLockAspect(DistributionScheduledProperties properties){
+    public DistributionScheduledAspect distributionScheduledAspect(DistributionScheduledProperties properties){
         return new DistributionScheduledAspect(properties);
     }
 
     @Bean
-    public DistributionScheduledProperties distributionLockProperties() {
+    public DistributionScheduledProperties distributionScheduledProperties() {
         return new DistributionScheduledProperties();
     }
 

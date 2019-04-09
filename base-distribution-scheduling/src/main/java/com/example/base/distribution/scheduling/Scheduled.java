@@ -13,17 +13,16 @@ import java.io.IOException;
  * @author xianmingyuan
  */
 @Slf4j
-public class Scheduled {
+class Scheduled {
 
     private static final String OPEN = "open";
-    private static final String CLOSE = "close";
 
     private ZooKeeper keeper;
     private String path;
     private String value = OPEN;
     private boolean locked = false;
 
-    public Scheduled(String address, int timeout, String path) {
+    Scheduled(String address, int timeout, String path) {
         try {
             keeper = new ZooKeeper(address, timeout, event -> {
             });
@@ -42,7 +41,7 @@ public class Scheduled {
     /**
      * 如果当前锁的开关状态为开，则返回true，否则返回false
      */
-    public boolean isOpen() {
+    boolean isOpen() {
         return OPEN.equals(value);
     }
 

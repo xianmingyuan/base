@@ -16,6 +16,7 @@
         <module>base-log</module>
         <module>base-distribution-scheduling</module>
         <module>base-test</module>
+        <module>base-distribution-lock</module>
     </modules>
 
     <parent>

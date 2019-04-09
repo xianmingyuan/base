@@ -23,7 +23,7 @@ public class DistributionScheduledAspect implements ApplicationContextAware {
     private static final String DEFAULT_PATH = "";
     private static final String START_CHAR = "/";
 
-    public DistributionScheduledAspect(DistributionScheduledProperties properties) {
+    DistributionScheduledAspect(DistributionScheduledProperties properties) {
         this.properties = properties;
     }
 
