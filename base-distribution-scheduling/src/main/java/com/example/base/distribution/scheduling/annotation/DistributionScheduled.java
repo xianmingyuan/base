@@ -1,4 +1,4 @@
-package com.example.base.distribution.lock.annotation;
+package com.example.base.distribution.scheduling.annotation;
 
 import java.lang.annotation.*;
 
@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DistributionLock {
+public @interface DistributionScheduled {
 
     String path() default "";
 

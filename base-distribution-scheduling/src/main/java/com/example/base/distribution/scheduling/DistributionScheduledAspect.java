@@ -1,6 +1,6 @@
-package com.example.base.distribution.lock;
+package com.example.base.distribution.scheduling;
 
-import com.example.base.distribution.lock.annotation.DistributionLock;
+import com.example.base.distribution.scheduling.annotation.DistributionScheduled;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,23 +16,23 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 @Slf4j
 @Aspect
-public class DistributionLockAspect implements ApplicationContextAware {
+public class DistributionScheduledAspect implements ApplicationContextAware {
 
     private ConfigurableApplicationContext context;
-    private DistributionLockProperties properties;
+    private DistributionScheduledProperties properties;
     private static final String DEFAULT_PATH = "";
     private static final String START_CHAR = "/";
 
-    public DistributionLockAspect(DistributionLockProperties properties) {
+    public DistributionScheduledAspect(DistributionScheduledProperties properties) {
         this.properties = properties;
     }
 
     @Around("@annotation(an)")
-    public Object proceed(ProceedingJoinPoint jp, DistributionLock an) throws Throwable {
+    public Object proceed(ProceedingJoinPoint jp, DistributionScheduled an) throws Throwable {
         String name = jp.getSignature().toString();
-        Lock lock;
+        Scheduled scheduled;
         try {
-            lock = (Lock) context.getBean(name);
+            scheduled = (Scheduled) context.getBean(name);
         } catch (NoSuchBeanDefinitionException e) {
             //实例化一个ZookeeperMasterElection
             log.info("正在实例化ZookeeperMasterElection");
@@ -40,11 +40,11 @@ public class DistributionLockAspect implements ApplicationContextAware {
             if (DEFAULT_PATH.equals(path)) {
                 path = START_CHAR + name.substring(name.indexOf(' '), name.indexOf('('));
             }
-            lock = new Lock(properties.getAddress(), properties.getTimeout(), path);
-            context.getBeanFactory().registerSingleton(name, lock);
+            scheduled = new Scheduled(properties.getAddress(), properties.getTimeout(), path);
+            context.getBeanFactory().registerSingleton(name, scheduled);
         }
 
-        if (lock.hasLocked() && lock.isOpen()) {
+        if (scheduled.hasLocked() && scheduled.isOpen()) {
             jp.proceed();
         }
         return null;

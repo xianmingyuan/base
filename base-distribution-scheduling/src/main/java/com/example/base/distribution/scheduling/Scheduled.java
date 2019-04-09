@@ -1,4 +1,4 @@
-package com.example.base.distribution.lock;
+package com.example.base.distribution.scheduling;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.*;
@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author xianmingyuan
  */
 @Slf4j
-public class Lock {
+public class Scheduled {
 
     private static final String OPEN = "open";
     private static final String CLOSE = "close";
@@ -23,7 +23,7 @@ public class Lock {
     private String value = OPEN;
     private boolean locked = false;
 
-    public Lock(String address, int timeout, String path) {
+    public Scheduled(String address, int timeout, String path) {
         try {
             keeper = new ZooKeeper(address, timeout, event -> {
             });

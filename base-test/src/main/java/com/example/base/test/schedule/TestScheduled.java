@@ -1,6 +1,6 @@
 package com.example.base.test.schedule;
 
-import com.example.base.distribution.lock.annotation.DistributionLock;
+import com.example.base.distribution.scheduling.annotation.DistributionLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
